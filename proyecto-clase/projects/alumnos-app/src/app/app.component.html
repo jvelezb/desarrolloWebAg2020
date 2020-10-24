@@ -6,10 +6,19 @@
 <!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
 <!-- * * * * * * * to get started with your project! * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<app-encabezado></app-encabezado>
+
+<div *ngIf="loggedIn; else elseBlock">
+  <app-encabezado></app-encabezado>
+</div>
+<ng-template #elseBlock>
+  <app-encabezado-logeado></app-encabezado-logeado>
+</ng-template>
 <titulo-pag-prin></titulo-pag-prin>
 
-<router-outlet></router-outlet>
+<div [@routeAnimations]="prepareRoute(outlet)">
+  <router-outlet #outlet="outlet"></router-outlet>
+</div>
+
 <!-- Aqui se sustituiran los elementos desde nuestra url-->
 <app-footer></app-footer>
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
