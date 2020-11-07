@@ -7,7 +7,7 @@
 <!-- * * * * * * * to get started with your project! * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
-<div *ngIf="loggedIn; else elseBlock">
+<div *ngIf="(auth.isAuthenticated$ | async) === false; else elseBlock">
   <app-encabezado></app-encabezado>
 </div>
 <ng-template #elseBlock>

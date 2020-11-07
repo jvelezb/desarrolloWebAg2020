@@ -14,15 +14,23 @@ import { ProfessorModule } from './module/professor/professor.module';
 import { PageNotFoundComponent } from './main-components/page-not-found/page-not-found.component';
 import { EncabezadoLogeadoComponent } from './main-components/encabezado-logeado/encabezado-logeado.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthModule } from '@auth0/auth0-angular';
+import { environment as env } from '../environments/environment';
+import { LoginButtonComponent } from './main-components/login-button/login-button.component';
+import { RegistroComponent } from './main-components/registro/registro.component';
+import { LogoutButtonComponent } from './main-components/logout-button/logout-button.component';
+import { ProfileComponent } from './main-components/profile/profile.component';
 
 @NgModule({
-  declarations: [AppComponent, EncabezadoComponent, FooterComponent, ListadoAlumnosComponent, TitulosComponent, PageNotFoundComponent, EncabezadoLogeadoComponent],
+  declarations: [AppComponent, EncabezadoComponent, FooterComponent, ListadoAlumnosComponent, TitulosComponent, PageNotFoundComponent, EncabezadoLogeadoComponent, LoginButtonComponent, RegistroComponent, LogoutButtonComponent, ProfileComponent],
   imports: [BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     GroupModule,
-    ProfessorModule],
+    ProfessorModule,
+    AuthModule.forRoot({ ...env.auth })
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
