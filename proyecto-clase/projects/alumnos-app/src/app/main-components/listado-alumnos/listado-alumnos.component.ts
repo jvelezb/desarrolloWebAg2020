@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Alumno } from '../../models/alumnos';
 import { animation, trigger, animateChild, group, transition, animate, style, query, state } from '@angular/animations';
+import { AlumnosService } from '../../main-services/alumnos.service';
+import {  takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
+
+
 
 @Component({
   selector: 'app-listado-alumnos',
@@ -32,18 +38,29 @@ export class ListadoAlumnosComponent implements OnInit {
 
   alumnoSeleccionado: any;
 
-  alumnos: Alumno[] = [
-    { matricula: '1', nombre: 'Juan', carrera: 'ITC', edad: 21 },
-    { matricula: '2', nombre: 'Sandra', carrera: 'ITC', edad: 22 },
-    { matricula: '1', nombre: 'Rosa', carrera: 'ITSE', edad: 22 },
-    { matricula: '1', nombre: 'Robert', carrera: 'ITC', edad: 23 },
-  ];
-  constructor() {}
+  alumnos: Alumno[] = [];
+
+  destroy$: Subject<boolean> = new Subject<boolean>();
+  constructor(private alumnosServices: AlumnosService) {}
 
 
   estilo = false;
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+
+      this.alumnosServices.getAlumnos().pipe(takeUntil(this.destroy$)).subscribe((data: any[])=>{
+      this.alumnos = data;
+    })  ;
+  }
+
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    // Unsubscribe from the subject
+    this.destroy$.unsubscribe();
+  }
+
+
 
   seleccionAlumnos(alumno: Alumno): void{
     this.alumnoSeleccionado = alumno;
@@ -52,6 +69,7 @@ export class ListadoAlumnosComponent implements OnInit {
 
 
   toggle() {
+    this.alumnosServices.insertarAlumnos({ nombres: "Juan", matricula: "1235", carrera: "ITC" ,edad:3});
     this.estilo = !this.estilo;
   }
 

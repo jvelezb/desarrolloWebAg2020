@@ -11,7 +11,7 @@
   <tbody>
     <tr *ngFor="let alumno of alumnos" (click)="seleccionAlumnos(alumno)">
       <th>{{ alumno.matricula }}</th>
-      <td>{{ alumno.nombre }}</td>
+      <td>{{ alumno.nombres }}</td>
       <td>{{ alumno.carrera }}</td>
     </tr>
   </tbody>
@@ -19,7 +19,7 @@
 <div *ngIf="alumnoSeleccionado">
   <label>
     Nombre:
-    <input [(ngModel)]="alumnoSeleccionado.nombre" placeholder="nombre" />
+    <input [(ngModel)]="alumnoSeleccionado.nombres" placeholder="nombres" />
   </label>
 </div>
 

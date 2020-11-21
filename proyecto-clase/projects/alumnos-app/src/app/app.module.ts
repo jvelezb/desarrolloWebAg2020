@@ -21,6 +21,11 @@ import { RegistroComponent } from './main-components/registro/registro.component
 import { LogoutButtonComponent } from './main-components/logout-button/logout-button.component';
 import { ProfileComponent } from './main-components/profile/profile.component';
 
+import { StorageServiceModule } from 'ngx-webstorage-service';
+
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthHttpInterceptor } from '@auth0/auth0-angular';
+
 @NgModule({
   declarations: [AppComponent, EncabezadoComponent, FooterComponent, ListadoAlumnosComponent, TitulosComponent, PageNotFoundComponent, EncabezadoLogeadoComponent, LoginButtonComponent, RegistroComponent, LogoutButtonComponent, ProfileComponent],
   imports: [BrowserModule,
@@ -29,9 +34,41 @@ import { ProfileComponent } from './main-components/profile/profile.component';
     FormsModule,
     GroupModule,
     ProfessorModule,
-    AuthModule.forRoot({ ...env.auth })
+    StorageServiceModule,
+    HttpClientModule,
+    AuthModule.forRoot({
+  // The domain and clientId were configured in the previous chapter
+  domain: 'dev-qz51ohsc.auth0.com',
+  clientId: 'jyPQwC4p9HUwegnIqJsL2JaXKfNbkb7U',
+
+  // Request this audience at user authentication time
+  audience: 'https://dev-qz51ohsc.auth0.com/api/v2/',
+
+  // Request this scope at user authentication time
+  scope: 'read:current_user',
+
+  // Specify configuration for the interceptor
+  httpInterceptor: {
+    allowedList: [
+      {
+        // Match any request that starts 'https://dev-qz51ohsc.auth0.com/api/v2/' (note the asterisk)
+        uri: 'https://dev-qz51ohsc.auth0.com/api/v2/*',
+        tokenOptions: {
+          // The attached token should target this audience
+          audience: 'https://dev-qz51ohsc.auth0.com/api/v2/',
+
+          // The attached token should have these scopes
+          scope: 'read:current_user'
+        }
+      }
+    ]
+  }
+}),
+
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

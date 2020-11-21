@@ -8,7 +8,7 @@ import { Alumno } from '../../models/alumnos';
 export class EncabezadoComponent implements OnInit {
   alumno: Alumno = {
     matricula: '955014',
-    nombre: 'Juan',
+    nombres: 'Juan',
     edad: 20,
     carrera: 'ITC',
   };

@@ -1,6 +1,6 @@
 export interface Alumno {
   matricula: string;
-  nombre: string;
+  nombres: string;
   edad: number;
   carrera: string;
 }

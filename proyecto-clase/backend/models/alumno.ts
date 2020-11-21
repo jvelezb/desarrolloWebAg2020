@@ -6,3 +6,7 @@ const alumnos = new mongoose.Schema({
   edad: Number,
   carrera: String
 });
+
+const Alumno = mongoose.model("Alumno", alumnos);
+
+export default Alumno;

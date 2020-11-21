@@ -1,4 +1,7 @@
 {
   "domain":"dev-qz51ohsc.auth0.com",
-  "clientId":"jyPQwC4p9HUwegnIqJsL2JaXKfNbkb7U"
+  "clientId":"jyPQwC4p9HUwegnIqJsL2JaXKfNbkb7U",
+  "apiUri": "http://localhost:3000/api",
+  "audience":"https://dev-qz51ohsc.auth0.com/api/v2/",
+  "appUri": "http://localhost:4200"
 }
